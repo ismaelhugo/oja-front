@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="8" fill="none"/>
+  <g fill="#FACC15">
+    <path d="M12 12H28V52H12V12Z" />
+    <path d="M36 12H52V52H36V12Z" />
+    <path d="M28 12H36V52H28V12Z" />
+  </g>
+</svg>
