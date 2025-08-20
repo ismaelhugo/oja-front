@@ -98,9 +98,42 @@ export default function Home() {
 
     window.addEventListener('scroll', handleParallax);
 
+    // Interatividade dos Exemplos de Consultas
+    const handleQueryExamples = () => {
+      const queryExamples = document.querySelectorAll('.query-example');
+      
+      queryExamples.forEach((example, index) => {
+        const htmlElement = example as HTMLElement;
+        
+        // Adicionar evento de click
+        htmlElement.addEventListener('click', () => {
+          // Remover classe 'active' de todos os exemplos
+          queryExamples.forEach(ex => ex.classList.remove('active'));
+          
+          // Adicionar classe 'active' ao exemplo clicado
+          htmlElement.classList.add('active');
+          
+          // Efeito de brilho ao clicar
+          htmlElement.classList.add('clicked');
+          setTimeout(() => {
+            htmlElement.classList.remove('clicked');
+          }, 500);
+        });
+      });
+
+      // Definir o primeiro exemplo como ativo por padrão
+      if (queryExamples.length > 0) {
+        queryExamples[0].classList.add('active');
+      }
+    };
+
+    // Aguardar um pouco para garantir que os elementos estejam no DOM
+    const queryTimeout = setTimeout(handleQueryExamples, 2000);
+
     // Cleanup function
     return () => {
       clearTimeout(timeoutId);
+      clearTimeout(queryTimeout);
       window.removeEventListener('scroll', handleParallax);
     };
   }, []);
@@ -294,69 +327,406 @@ export default function Home() {
             
             <div className="bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-700">
               <h3 className="text-2xl font-bold text-white mb-6">Exemplos de Consultas</h3>
+              <p className="text-gray-400 text-sm mb-4">Clique nos exemplos para ver como diferentes tipos de perguntas podem ser feitas:</p>
               <div className="space-y-4">
-                <div className="bg-gray-700 rounded-lg p-4 border border-yellow-500/20">
-                  <p className="text-yellow-300 font-medium">
-                    "Quanto o deputado X gastou em 2024 com combustível?"
-                  </p>
-                </div>
-                <div className="bg-gray-700 rounded-lg p-4">
+                <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
                   <p className="text-gray-200 font-medium">
-                    "Quais são os principais fornecedores do deputado Y?"
+                    "Quanto o deputado Eduardo Bolsonaro gastou em 2024 com combustível?"
                   </p>
                 </div>
-                <div className="bg-gray-700 rounded-lg p-4">
+                <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
+                  <p className="text-gray-200 font-medium">
+                    "Quais são os principais fornecedores do deputado Marcelo Freixo?"
+                  </p>
+                </div>
+                <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
                   <p className="text-gray-200 font-medium">
                     "Compare os gastos com passagens aéreas entre deputados de SP"
                   </p>
                 </div>
-                <div className="bg-gray-700 rounded-lg p-4">
+                <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
                   <p className="text-gray-200 font-medium">
                     "Mostre o ranking de gastos com alimentação em 2024"
                   </p>
                 </div>
+                <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
+                  <p className="text-gray-200 font-medium">
+                    "Qual o total gasto por deputados do PT em divulgação parlamentar?"
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 pt-4 border-t border-gray-700">
+                <p className="text-gray-400 text-xs text-center">
+                  💡 Dica: Nossa IA entende perguntas em linguagem natural e pode responder sobre qualquer aspecto dos gastos públicos
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Status do Projeto */}
-      <section className="bg-gradient-to-r from-yellow-50 to-blue-50 py-16">
+      {/* Como Funciona - Processo Técnico */}
+      <section className="bg-slate-900 py-16 lg:py-24">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-yellow-100 border border-yellow-300 rounded-full px-6 py-3 mb-6">
-              <span className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></span>
-              <span className="text-yellow-800 font-semibold">Projeto em Desenvolvimento</span>
-            </div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Construindo o Futuro da Transparência
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
+              Como Funciona
             </h2>
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Estamos trabalhando intensamente para criar uma plataforma que revolucione o acesso à informação pública no Brasil. 
-              Nossa equipe está desenvolvendo cada funcionalidade com foco na usabilidade e acessibilidade para todos os cidadãos.
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-6">
+              Processo transparente e confiável de coleta, processamento e consulta de dados públicos
             </p>
+            
+            {/* Open Source Badge */}
+            <div className="flex justify-center items-center gap-4 mb-8">
+              <div className="bg-gray-800 border border-yellow-500/30 rounded-full px-6 py-3 flex items-center gap-3 hover-glow">
+                <span className="text-2xl">🌟</span>
+                <div className="text-left">
+                  <p className="text-yellow-400 font-semibold text-sm">Projeto Open Source</p>
+                  <p className="text-gray-300 text-xs">Código aberto, transparente e colaborativo</p>
+                </div>
+              </div>
+              <div className="bg-gray-800 border border-green-500/30 rounded-full px-6 py-3 flex items-center gap-3 hover-glow">
+                <span className="text-2xl">🚀</span>
+                <div className="text-left">
+                  <p className="text-green-400 font-semibold text-sm">Contribuições Bem-vindas</p>
+                  <p className="text-gray-300 text-xs">Participe do desenvolvimento no GitHub</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Pipeline Visual */}
+          <div className="max-w-7xl mx-auto mb-16">
+            <div className="grid lg:grid-cols-4 gap-8 mb-12">
+              
+              {/* Etapa 1: Coleta */}
+              <div className="pipeline-step hover-lift relative">
+                <div className="flow-step-number">1</div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
+                    <span className="text-black text-2xl">🔗</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">Coleta Automática</h3>
+                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                    Dados coletados diretamente da API oficial da Câmara dos Deputados
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-1">
+                    <span className="tech-badge">REST API</span>
+                    <span className="tech-badge">HTTPS</span>
+                    <span className="tech-badge">JSON</span>
+                  </div>
+                </div>
+                <div className="pipeline-connector hidden lg:block"></div>
+              </div>
+
+              {/* Etapa 2: Transformação */}
+              <div className="pipeline-step hover-lift relative">
+                <div className="flow-step-number">2</div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
+                    <span className="text-black text-2xl">⚙️</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">Processamento</h3>
+                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                    Limpeza, validação e estruturação dos dados brutos
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-1">
+                    <span className="tech-badge">ETL Pipeline</span>
+                    <span className="tech-badge">Data Validation</span>
+                    <span className="tech-badge">PostgreSQL</span>
+                  </div>
+                </div>
+                <div className="pipeline-connector hidden lg:block"></div>
+              </div>
+
+              {/* Etapa 3: Indexação */}
+              <div className="pipeline-step hover-lift relative">
+                <div className="flow-step-number">3</div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
+                    <span className="text-black text-2xl">🗂️</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">Indexação IA</h3>
+                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                    Vetorização para consultas em linguagem natural
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-1">
+                    <span className="tech-badge">Vector DB</span>
+                    <span className="tech-badge">Embeddings</span>
+                    <span className="tech-badge">Semantic Search</span>
+                  </div>
+                </div>
+                <div className="pipeline-connector hidden lg:block"></div>
+              </div>
+
+              {/* Etapa 4: Consulta */}
+              <div className="pipeline-step hover-lift relative">
+                <div className="flow-step-number">4</div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
+                    <span className="text-black text-2xl">🤖</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">IA Conversacional</h3>
+                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                    Interface conversacional para perguntas em português
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-1">
+                    <span className="tech-badge">LLM</span>
+                    <span className="tech-badge">RAG</span>
+                    <span className="tech-badge">Natural Language</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Detalhes Técnicos */}
+          <div className="grid lg:grid-cols-1 gap-12 mb-16">
+            {/* Fonte de Dados */}
+            <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700 hover-lift max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <span className="text-yellow-400">📡</span>
+                Fonte de Dados Oficial
+              </h3>
+              <div className="space-y-4">
+                <div className="security-badge">
+                  <span>🔒</span>
+                  <span>Dados Abertos Oficiais</span>
+                </div>
+                <div className="code-block">
+                  <div className="api-endpoint">GET</div> dadosabertos.camara.leg.br/api/v2/deputados
+                  <br />
+                  <div className="json-key">"ano"</div>: <div className="json-value">"2024"</div>
+                  <br />
+                  <div className="json-key">"despesas"</div>: <div className="json-value">[]</div>
+                </div>
+                <p className="text-gray-300 text-sm">
+                  Utilizamos exclusivamente dados oficiais da API da Câmara dos Deputados, 
+                  garantindo autenticidade e rastreabilidade de todas as informações.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Fluxo de Consulta Detalhado */}
+          <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700 data-wave">
+            <h3 className="text-2xl font-bold text-white mb-8 text-center">
+              Fluxo de Consulta em Tempo Real
+            </h3>
+            <div className="grid md:grid-cols-9 gap-2 items-center">
+              <div className="text-center flow-step-animated">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
+                  <span className="text-white">👤</span>
+                </div>
+                <p className="text-gray-300 text-sm">Usuário faz pergunta</p>
+              </div>
+              
+              <div className="text-center flow-arrow-animated">
+                <span className="flow-arrow hidden md:block text-yellow-400 text-xl animate-pulse">→</span>
+              </div>
+              
+              <div className="text-center flow-step-animated">
+                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
+                  <span className="text-black">🔍</span>
+                </div>
+                <p className="text-gray-300 text-sm">Análise semântica</p>
+              </div>
+              
+              <div className="text-center flow-arrow-animated">
+                <span className="flow-arrow hidden md:block text-yellow-400 text-xl animate-pulse">→</span>
+              </div>
+              
+              <div className="text-center flow-step-animated">
+                <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
+                  <span className="text-white">🗃️</span>
+                </div>
+                <p className="text-gray-300 text-sm">Busca no banco</p>
+              </div>
+              
+              <div className="text-center flow-arrow-animated">
+                <span className="flow-arrow hidden md:block text-yellow-400 text-xl animate-pulse">→</span>
+              </div>
+              
+              <div className="text-center flow-step-animated">
+                <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
+                  <span className="text-white">🤖</span>
+                </div>
+                <p className="text-gray-300 text-sm">IA processa contexto</p>
+              </div>
+              
+              <div className="text-center flow-arrow-animated">
+                <span className="flow-arrow hidden md:block text-yellow-400 text-xl animate-pulse">→</span>
+              </div>
+              
+              <div className="text-center flow-step-animated">
+                <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
+                  <span className="text-white">📊</span>
+                </div>
+                <p className="text-gray-300 text-sm">Resposta formatada</p>
+              </div>
+            </div>
+            
+            {/* Indicador de performance */}
+            <div className="mt-8 pt-6 border-t border-gray-700">
+              <div className="flex justify-center items-center gap-8 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-gray-300">Tempo médio: &lt;2s</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                  <span className="text-gray-300">Processamento em tempo real</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
+                  <span className="text-gray-300">Resposta contextualizada</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Garantias de Qualidade */}
+          <div className="mt-16 text-center">
+            <h3 className="text-2xl font-bold text-white mb-8">Garantias de Qualidade</h3>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-xl p-6 shadow-sm border">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <span className="text-green-600 text-xl">✅</span>
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2">Pesquisa e Planejamento</h3>
-                <p className="text-gray-600 text-sm">Análise dos dados CEAP e definição da arquitetura</p>
+              <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover-lift">
+                <div className="text-green-400 text-3xl mb-4">✅</div>
+                <h4 className="text-white font-bold mb-2">Dados Verificados</h4>
+                <p className="text-gray-300 text-sm">
+                  Validação automática contra a fonte oficial a cada atualização
+                </p>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-yellow-200">
-                <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <span className="text-yellow-600 text-xl">🔄</span>
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2">Desenvolvimento</h3>
-                <p className="text-gray-600 text-sm">Criação das interfaces e integração com IA</p>
+              
+              <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover-lift">
+                <div className="text-blue-400 text-3xl mb-4">🔄</div>
+                <h4 className="text-white font-bold mb-2">Atualização Contínua</h4>
+                <p className="text-gray-300 text-sm">
+                  Sincronização diária com os dados mais recentes da Câmara
+                </p>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-sm border">
-                <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <span className="text-gray-400 text-xl">⏳</span>
+              
+              <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover-lift">
+                <div className="text-yellow-400 text-3xl mb-4">🛡️</div>
+                <h4 className="text-white font-bold mb-2">Transparência Total</h4>
+                <p className="text-gray-300 text-sm">
+                  Código aberto e metodologia de processamento documentada
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Open Source e Colaboração */}
+      <section className="bg-gray-900 py-16 lg:py-20">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 flex items-center justify-center gap-4">
+                <span className="text-4xl">🌍</span>
+                Projeto Open Source
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Acreditamos na transparência total. Por isso, todo o código fonte do projeto está disponível publicamente, 
+                permitindo auditoria, colaboração e melhorias contínuas da comunidade.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Benefícios Open Source */}
+              <div className="space-y-6">
+                <div className="flex items-start gap-4 hover-lift">
+                  <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-xl">🔍</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Transparência Completa</h3>
+                    <p className="text-gray-300">
+                      Todo o processo de coleta, tratamento e apresentação dos dados pode ser auditado pela comunidade.
+                    </p>
+                  </div>
                 </div>
-                <h3 className="font-bold text-gray-900 mb-2">Testes e Lançamento</h3>
-                <p className="text-gray-600 text-sm">Validação final e disponibilização pública</p>
+
+                <div className="flex items-start gap-4 hover-lift">
+                  <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-xl">🤝</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Colaboração Comunitária</h3>
+                    <p className="text-gray-300">
+                      Desenvolvedores, jornalistas e cidadãos podem contribuir com melhorias, correções e novas funcionalidades.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 hover-lift">
+                  <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-xl">🔧</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Evolução Contínua</h3>
+                    <p className="text-gray-300">
+                      A comunidade pode sugerir melhorias, reportar problemas e participar do desenvolvimento de novas features.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Call to Action para GitHub */}
+              <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span className="text-black text-3xl">💻</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4">Participe do Desenvolvimento</h3>
+                  <p className="text-gray-300 mb-6 leading-relaxed">
+                    Este é um projeto <strong>open source</strong> que aceita contribuições via <strong>fork + pull request</strong>. 
+                    Você pode contribuir com:
+                  </p>
+                  
+                  <div className="space-y-2 mb-8">
+                    <div className="tech-badge">🐛 Correções de bugs</div>
+                    <div className="tech-badge">✨ Novas funcionalidades</div>
+                    <div className="tech-badge">🎨 Melhorias de UI/UX</div>
+                    <div className="tech-badge">📚 Documentação</div>
+                    <div className="tech-badge">🧪 Testes automatizados</div>
+                  </div>
+
+                  <div className="bg-gray-700 rounded-lg p-4 border border-yellow-500/20 mb-6">
+                    <h4 className="text-yellow-300 font-semibold mb-2">Como Contribuir:</h4>
+                    <div className="text-left text-sm text-gray-300 space-y-1">
+                      <p>1. 🍴 <strong>Fork</strong> o repositório</p>
+                      <p>2. 🌿 Crie uma <strong>branch</strong> para sua feature</p>
+                      <p>3. 💻 Faça suas <strong>alterações</strong></p>
+                      <p>4. 🔃 Abra um <strong>Pull Request</strong></p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a
+                      href="https://github.com/ismaelhugo/oja-front"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-lg flex items-center gap-2"
+                    >
+                      <span>⭐</span>
+                      Ver no GitHub
+                    </a>
+                    <a
+                      href="https://github.com/ismaelhugo/oja-front/blob/main/CONTRIBUTING.md"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border-2 border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300 flex items-center gap-2"
+                    >
+                      <span>📋</span>
+                      Guia de Contribuição
+                    </a>
+                  </div>
+
+                  <p className="text-gray-400 text-xs mt-4">
+                    💡 Todas as contribuições passam por revisão antes do merge
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -384,13 +754,20 @@ export default function Home() {
                 href="https://github.com/ismaelhugo/oja-front"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-lg"
+                className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-lg flex items-center gap-2 justify-center"
               >
+                <span>⭐</span>
                 Acompanhar no GitHub
               </a>
-              <button className="border-2 border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300">
-                Receber Notificações
-              </button>
+              <a
+                href="https://github.com/ismaelhugo/oja-front/blob/main/CONTRIBUTING.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-2 border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300 flex items-center gap-2 justify-center"
+              >
+                <span>🤝</span>
+                Como Contribuir
+              </a>
             </div>
           </div>
         </div>
