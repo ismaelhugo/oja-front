@@ -377,19 +377,23 @@ export default function Home() {
             </p>
             
             {/* Open Source Badge */}
-            <div className="flex justify-center items-center gap-4 mb-8">
-              <div className="bg-gray-800 border border-yellow-500/30 rounded-full px-6 py-3 flex items-center gap-3 hover-glow">
-                <span className="text-2xl">🌟</span>
-                <div className="text-left">
-                  <p className="text-yellow-400 font-semibold text-sm">Projeto Open Source</p>
-                  <p className="text-gray-300 text-xs">Código aberto, transparente e colaborativo</p>
+            <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8">
+              <div className="bg-gray-800 border border-yellow-500/30 rounded-full px-6 py-3 w-full md:w-auto">
+                <div className="flex flex-col md:flex-row items-center md:gap-3 hover-glow">
+                  <span className="text-2xl mb-2 md:mb-0">🌟</span>
+                  <div className="text-center md:text-left">
+                    <p className="text-yellow-400 font-semibold text-sm">Projeto Open Source</p>
+                    <p className="text-gray-300 text-xs">Código aberto, transparente e colaborativo</p>
+                  </div>
                 </div>
               </div>
-              <div className="bg-gray-800 border border-green-500/30 rounded-full px-6 py-3 flex items-center gap-3 hover-glow">
-                <span className="text-2xl">🚀</span>
-                <div className="text-left">
-                  <p className="text-green-400 font-semibold text-sm">Contribuições Bem-vindas</p>
-                  <p className="text-gray-300 text-xs">Participe do desenvolvimento no GitHub</p>
+              <div className="bg-gray-800 border border-green-500/30 rounded-full px-6 py-3 w-full md:w-auto">
+                <div className="flex flex-col md:flex-row items-center md:gap-3 hover-glow">
+                  <span className="text-2xl mb-2 md:mb-0">🚀</span>
+                  <div className="text-center md:text-left">
+                    <p className="text-green-400 font-semibold text-sm">Contribuições Bem-vindas</p>
+                    <p className="text-gray-300 text-xs">Participe do desenvolvimento no GitHub</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -483,7 +487,7 @@ export default function Home() {
           {/* Detalhes Técnicos */}
           <div className="grid lg:grid-cols-1 gap-12 mb-16">
             {/* Fonte de Dados */}
-            <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700 hover-lift max-w-4xl mx-auto">
+            <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700 hover-lift max-w-4xl mx-auto fonte-dados-box">
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <span className="text-yellow-400">📡</span>
                 Fonte de Dados Oficial
@@ -493,7 +497,7 @@ export default function Home() {
                   <span>🔒</span>
                   <span>Dados Abertos Oficiais</span>
                 </div>
-                <div className="code-block">
+                <div className="code-block max-w-[70vw]">
                   <div className="api-endpoint">GET</div> dadosabertos.camara.leg.br/api/v2/deputados
                   <br />
                   <div className="json-key">"ano"</div>: <div className="json-value">"2024"</div>
