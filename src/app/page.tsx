@@ -17,13 +17,30 @@ export default function Home() {
       "Despesas com divulgação da atividade parlamentar em 2024"
     ];
 
-    let questionIndex = 0;
+    let questionIndex = Math.floor(Math.random() * questions.length);
     let charIndex = 0;
     let isDeleting = false;
+    let usedQuestions = new Set();
     const typewriterElement = document.getElementById('typewriter-text');
     const cursorElement = document.getElementById('cursor');
 
     if (!typewriterElement || !cursorElement) return;
+
+    // Função para obter próxima pergunta aleatória
+    const getRandomQuestionIndex = () => {
+      // Se todas as perguntas foram usadas, reinicia o conjunto
+      if (usedQuestions.size >= questions.length) {
+        usedQuestions.clear();
+      }
+      
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * questions.length);
+      } while (usedQuestions.has(randomIndex));
+      
+      usedQuestions.add(randomIndex);
+      return randomIndex;
+    };
 
     // Velocidades variáveis para parecer mais humano
     const getTypeSpeed = () => Math.random() * 50 + 50; // 50-100ms
@@ -54,9 +71,9 @@ export default function Home() {
             typeWriter();
           }, pauseTime);
         } else {
-          // Próxima pergunta
+          // Próxima pergunta aleatória
           isDeleting = false;
-          questionIndex = (questionIndex + 1) % questions.length;
+          questionIndex = getRandomQuestionIndex();
           setTimeout(typeWriter, 800);
         }
       }
