@@ -227,39 +227,52 @@ export default function Home() {
             <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-6">
               Nossa Missão
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Facilitar o acesso às informações de despesas dos deputados federais brasileiros através de interfaces acessíveis e intuitivas
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8">
+              Democratizar o acesso à informação pública e fortalecer a transparência democrática no Brasil, 
+              capacitando cada cidadão a exercer seu direito de fiscalização dos gastos públicos.
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center p-8 bg-gray-900 rounded-2xl border border-gray-700 hover-lift card-animate">
-              <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6 hover-glow">
-                <span className="text-2xl">📊</span>
+              <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 hover-glow">
+                <span className="text-2xl text-white">🏛️</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Dados CEAP</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">Fortalecer a Democracia</h3>
               <p className="text-gray-300 leading-relaxed">
-                Acesso completo aos dados de despesas da Cota para Exercício da Atividade Parlamentar
+                Contribuir para uma sociedade mais justa através da transparência e do controle social efetivo dos recursos públicos.
               </p>
             </div>
             
             <div className="text-center p-8 bg-gray-800 rounded-2xl border border-yellow-500/20 hover-lift card-animate">
               <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 hover-glow float-animation">
-                <span className="text-2xl text-black">📱</span>
+                <span className="text-2xl text-black">👥</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Mobile First</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">Empoderar Cidadãos</h3>
               <p className="text-gray-300 leading-relaxed">
-                Interface otimizada para dispositivos móveis, garantindo acessibilidade para todos os públicos
+                Tornar informações complexas acessíveis a todos, independente do conhecimento técnico, promovendo participação cidadã ativa.
               </p>
             </div>
             
             <div className="text-center p-8 bg-gray-900 rounded-2xl border border-gray-700 hover-lift card-animate">
-              <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6 hover-glow">
-                <span className="text-2xl">🤖</span>
+              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 hover-glow">
+                <span className="text-2xl text-white">⚖️</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">IA Conversacional</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">Promover Accountability</h3>
               <p className="text-gray-300 leading-relaxed">
-                Agente LLM que permite consultas em linguagem natural sobre gastos públicos
+                Facilitar o acompanhamento e a fiscalização dos gastos públicos, incentivando responsabilidade e ética na gestão pública.
+              </p>
+            </div>
+          </div>
+
+          {/* Impacto Social */}
+          <div className="mt-16 bg-gradient-to-r from-blue-600/10 to-yellow-500/10 rounded-2xl p-8 border border-blue-500/20">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Nosso Impacto Social</h3>
+              <p className="text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                Acreditamos que a transparência é a base da democracia. Ao tornar os dados públicos acessíveis e compreensíveis, 
+                capacitamos jornalistas, pesquisadores, organizações da sociedade civil e cidadãos comuns a exercerem 
+                o controle social e a cobrarem prestação de contas dos seus representantes.
               </p>
             </div>
           </div>
@@ -271,7 +284,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
-              Funcionalidades
+              A plataforma
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Ferramentas poderosas para análise e compreensão dos gastos públicos
@@ -281,9 +294,25 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="space-y-8">
-                <div className="flex gap-4 hover-lift">
+                {/* Funcionalidade Principal - Agente LLM */}
+                <div className="flex gap-4 hover-lift bg-gradient-to-r from-yellow-500/20 to-orange-500/20 p-4 rounded-lg border border-yellow-500/30">
                   <div className="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
-                    <span className="text-black text-xl">📈</span>
+                    <span className="text-black text-xl">🤖</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                      Agente IA Conversacional
+                    </h3>
+                    <p className="text-gray-300">
+                      Converse com nossa IA em linguagem natural para obter análises detalhadas dos gastos públicos. 
+                      Faça perguntas complexas e receba respostas precisas baseadas nos dados do CEAP.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4 hover-lift">
+                  <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
+                    <span className="text-white text-xl">📈</span>
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white mb-2">Gráficos Interativos</h3>
@@ -490,34 +519,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Detalhes Técnicos */}
-          <div className="grid lg:grid-cols-1 gap-12 mb-16">
-            {/* Fonte de Dados */}
-            <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700 hover-lift max-w-4xl mx-auto fonte-dados-box">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <span className="text-yellow-400">📡</span>
-                Fonte de Dados Oficial
-              </h3>
-              <div className="space-y-4">
-                <div className="security-badge">
-                  <span>🔒</span>
-                  <span>Dados Abertos Oficiais</span>
-                </div>
-                <div className="code-block max-w-[70vw]">
-                  <div className="api-endpoint">GET</div> dadosabertos.camara.leg.br/api/v2/deputados
-                  <br />
-                  <div className="json-key">"ano"</div>: <div className="json-value">"2024"</div>
-                  <br />
-                  <div className="json-key">"despesas"</div>: <div className="json-value">[]</div>
-                </div>
-                <p className="text-gray-300 text-sm">
-                  Utilizamos exclusivamente dados oficiais da API da Câmara dos Deputados, 
-                  garantindo autenticidade e rastreabilidade de todas as informações.
-                </p>
-              </div>
-            </div>
-          </div>
-
           {/* Fluxo de Consulta Detalhado */}
           <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700 data-wave">
             <h3 className="text-2xl font-bold text-white mb-8 text-center">
@@ -597,7 +598,6 @@ export default function Home() {
 
           {/* Garantias de Qualidade */}
           <div className="mt-16 text-center">
-            <h3 className="text-2xl font-bold text-white mb-8">Garantias de Qualidade</h3>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover-lift">
                 <div className="text-green-400 text-3xl mb-4">✅</div>
@@ -743,48 +743,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="bg-black py-16 lg:py-24">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
-            Promovendo a Transparência Pública
-          </h2>
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Acreditamos que a transparência é fundamental para uma democracia saudável. 
-            Nosso projeto democratiza o acesso à informação pública através da tecnologia.
-          </p>
-          <div className="bg-yellow-400/10 border-2 border-yellow-400 rounded-2xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-yellow-400 mb-4">🚀 Lançamento em Breve</h3>
-            <p className="text-gray-300 text-lg mb-6">
-              Estamos trabalhando para trazer uma plataforma completa de transparência pública. 
-              Em breve você poderá consultar todos os gastos dos deputados federais de forma simples e intuitiva.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://github.com/ismaelhugo/oja-front"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-lg flex items-center gap-2 justify-center"
-              >
-                <span>⭐</span>
-                Acompanhar no GitHub
-              </a>
-              <a
-                href="https://github.com/ismaelhugo/oja-front/blob/main/CONTRIBUTING.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-2 border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300 flex items-center gap-2 justify-center"
-              >
-                <span>🤝</span>
-                Como Contribuir
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="bg-gray-900 py-12">
+      <footer className="bg-black py-12">
         <div className="container mx-auto px-6">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-4">
