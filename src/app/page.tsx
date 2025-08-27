@@ -184,12 +184,12 @@ export default function Home() {
                 <p className="text-gray-300 mb-4">
                   Estamos finalizando os últimos detalhes para trazer transparência completa aos gastos públicos
                 </p>
-                <a
+                {/* <a
                   href="/deputados"
                   className="inline-block bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-lg transition-colors duration-300 text-sm"
                 >
                   Ver Lista de Deputados
-                </a>
+                </a> */}
               </div>
             </div>
             <div className="flex-1 lg:flex-none parallax-element" data-speed="0.1">
