@@ -69,7 +69,7 @@ export default function DeputadosPage() {
 
   const fetchAllDeputados = async () => {
     try {
-      const response = await fetch("http://localhost:3333/deputado/list?page=1&limit=0");
+      const response = await fetch("https://oja-back-production.up.railway.app/deputado/list?page=1&limit=0");
       if (response.ok) {
         const responseData = await response.json();
         // Filtrar deputados de exemplo para os dropdowns
@@ -102,7 +102,7 @@ export default function DeputadosPage() {
         params.append('estado', filtroUF);
       }
       
-      const url = `http://localhost:3333/deputado/list?${params.toString()}`;
+      const url = `https://oja-back-production.up.railway.app/deputado/list?${params.toString()}`;
       console.log('Fetching URL:', url); // Debug
       
       const response = await fetch(url);
