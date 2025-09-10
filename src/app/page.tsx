@@ -180,7 +180,7 @@ export default function Home() {
                 Transparência e acesso à informação pública no Brasil através de inteligência artificial
               </p>
               <div className="bg-yellow-400/20 border-2 border-yellow-400 rounded-lg p-6 backdrop-blur-sm hover-lift shimmer">
-                <p className="text-yellow-300 font-bold text-lg mb-2">🚀 Lançamento em Breve</p>
+                <p className="text-yellow-300 font-bold text-lg mb-2">🚀 Em breve</p>
                 <p className="text-gray-300 mb-4">
                   Estamos finalizando os últimos detalhes para trazer transparência completa aos gastos públicos
                 </p>
