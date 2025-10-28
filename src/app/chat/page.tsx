@@ -17,6 +17,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [sessaoId, setSessaoId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -37,12 +38,16 @@ export default function ChatPage() {
     setIsLoading(true);
 
     try {
+      // Enviar apenas sessaoId (não mais o histórico completo)
       const response = await fetch('http://localhost:3333/ai/perguntar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ pergunta: question }),
+        body: JSON.stringify({ 
+          pergunta: question,
+          sessaoId: sessaoId, // Envia ID da sessão se existir
+        }),
       });
 
       if (!response.ok) {
@@ -50,6 +55,12 @@ export default function ChatPage() {
       }
 
       const data = await response.json();
+      
+      // Salva o sessaoId retornado pelo backend
+      if (data.sessaoId) {
+        setSessaoId(data.sessaoId);
+      }
+      
       const assistantMessage: Message = {
         role: 'assistant',
         content: data.resposta || 'Desculpe, não consegui processar sua pergunta.',
@@ -85,6 +96,24 @@ export default function ChatPage() {
     }
   };
 
+  const limparConversa = async () => {
+    if (sessaoId) {
+      try {
+        await fetch('http://localhost:3333/ai/limpar-sessao', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ sessaoId }),
+        });
+      } catch (error) {
+        console.error('Erro ao limpar sessão:', error);
+      }
+    }
+    setMessages([]);
+    setSessaoId(null);
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
@@ -94,7 +123,7 @@ export default function ChatPage() {
             Operação Janela Aberta - Chat IA
           </h1>
           <button
-            onClick={() => setMessages([])}
+            onClick={limparConversa}
             className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
           >
             Nova Conversa
