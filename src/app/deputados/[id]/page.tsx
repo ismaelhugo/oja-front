@@ -48,6 +48,7 @@ interface ExpensesStats {
   deputadoId: number;
   periodo: {
     ano?: number;
+    mes?: number;
     startDate?: string;
     endDate?: string;
   };
@@ -63,6 +64,28 @@ interface TopFornecedor {
   total: number;
   quantidade: number;
   percentual: number;
+}
+
+interface StateCategoryAverage {
+  tipo: string;
+  media: number;
+  total: number;
+  deputadosComDespesa: number;
+}
+
+interface StateAverageStats {
+  estado: string;
+  periodo: {
+    ano?: number;
+    mes?: number;
+    startDate?: string;
+    endDate?: string;
+  };
+  totalGastos: number;
+  mediaGeral: number;
+  totalDeputadosConsiderados: number;
+  totalDeputadosEstado: number;
+  mediaPorCategoria: StateCategoryAverage[];
 }
 
 // Cores para o gráfico de pizza
@@ -96,6 +119,21 @@ const formatDate = (dateString: string) => {
   return date.toLocaleDateString('pt-BR');
 };
 
+const MONTH_LABELS = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+];
+
 export default function DeputadoDetailPage({
   params,
 }: {
@@ -105,6 +143,7 @@ export default function DeputadoDetailPage({
   const [stats, setStats] = useState<ExpensesStats | null>(null);
   const [despesas, setDespesas] = useState<Despesa[]>([]);
   const [topFornecedores, setTopFornecedores] = useState<TopFornecedor[]>([]);
+  const [stateAverage, setStateAverage] = useState<StateAverageStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -112,10 +151,28 @@ export default function DeputadoDetailPage({
   const [year, setYear] = useState<number>(2025);
   const [deputadoId, setDeputadoId] = useState<number | null>(null);
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
+  const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
   const itemsPerPage = 20;
   const yearDropdownRef = useRef<HTMLDivElement | null>(null);
+  const monthDropdownRef = useRef<HTMLDivElement | null>(null);
 
   const availableYears = [2023, 2024, 2025];
+  const [month, setMonth] = useState<number>(0);
+  const availableMonths = [
+    { value: 0, label: 'Todos os meses' },
+    { value: 1, label: 'Janeiro' },
+    { value: 2, label: 'Fevereiro' },
+    { value: 3, label: 'Março' },
+    { value: 4, label: 'Abril' },
+    { value: 5, label: 'Maio' },
+    { value: 6, label: 'Junho' },
+    { value: 7, label: 'Julho' },
+    { value: 8, label: 'Agosto' },
+    { value: 9, label: 'Setembro' },
+    { value: 10, label: 'Outubro' },
+    { value: 11, label: 'Novembro' },
+    { value: 12, label: 'Dezembro' },
+  ];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -124,6 +181,12 @@ export default function DeputadoDetailPage({
         !yearDropdownRef.current.contains(event.target as Node)
       ) {
         setIsYearDropdownOpen(false);
+      }
+      if (
+        monthDropdownRef.current &&
+        !monthDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsMonthDropdownOpen(false);
       }
     };
 
@@ -162,17 +225,20 @@ export default function DeputadoDetailPage({
     fetchDeputado();
   }, [deputadoId]);
 
-  // Buscar estatísticas e despesas quando o ano mudar
+  // Buscar estatísticas e despesas quando filtros mudarem
   useEffect(() => {
     const fetchData = async () => {
-      if (!deputadoId) return;
+      if (!deputadoId || !deputado?.siglaUf) return;
 
       try {
         setLoading(true);
+        setStateAverage(null);
 
         // Buscar estatísticas
         const statsRes = await fetch(
-          `${API_URL}/estatisticas/deputado/${deputadoId}/gastos?year=${year}`,
+          `${API_URL}/estatisticas/deputado/${deputadoId}/gastos?year=${year}${
+            month > 0 ? `&month=${month}` : ''
+          }`,
         );
         if (!statsRes.ok) throw new Error('Erro ao buscar estatísticas');
         const statsData = await statsRes.json();
@@ -180,16 +246,31 @@ export default function DeputadoDetailPage({
 
         // Buscar ranking de fornecedores
         const fornecedoresRes = await fetch(
-          `${API_URL}/estatisticas/deputado/${deputadoId}/fornecedores?year=${year}&limit=10`,
+          `${API_URL}/estatisticas/deputado/${deputadoId}/fornecedores?year=${year}&limit=10${
+            month > 0 ? `&month=${month}` : ''
+          }`,
         );
         if (fornecedoresRes.ok) {
           const fornecedoresData = await fornecedoresRes.json();
           setTopFornecedores(fornecedoresData);
         }
 
+        // Buscar média estadual
+        const stateAverageRes = await fetch(
+          `${API_URL}/estatisticas/estado/${deputado.siglaUf}/media-gastos?year=${year}${
+            month > 0 ? `&month=${month}` : ''
+          }`,
+        );
+        if (stateAverageRes.ok) {
+          const stateAverageData = await stateAverageRes.json();
+          setStateAverage(stateAverageData);
+        } else {
+          setStateAverage(null);
+        }
+
         // Resetar página e buscar despesas
         setCurrentPage(1);
-        await fetchDespesas(deputadoId, 1);
+        await fetchDespesas(deputadoId, 1, undefined, month > 0 ? month : undefined);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Erro desconhecido');
       } finally {
@@ -198,13 +279,21 @@ export default function DeputadoDetailPage({
     };
 
     fetchData();
-  }, [deputadoId, year]);
+  }, [deputadoId, deputado?.siglaUf, year, month]);
 
-  const fetchDespesas = async (deputadoId: number, page: number, ano?: number) => {
+  const fetchDespesas = async (
+    deputadoId: number,
+    page: number,
+    ano?: number,
+    mes?: number,
+  ) => {
     try {
       const anoFiltro = ano || year;
+      const mesFiltro = mes ?? (month > 0 ? month : undefined);
       const res = await fetch(
-        `${API_URL}/despesa/list?deputadoId=${deputadoId}&page=${page}&limit=${itemsPerPage}&ano=${anoFiltro}`,
+        `${API_URL}/despesa/list?deputadoId=${deputadoId}&page=${page}&limit=${itemsPerPage}&ano=${anoFiltro}${
+          mesFiltro ? `&mes=${mesFiltro}` : ''
+        }`,
       );
       if (!res.ok) throw new Error('Erro ao buscar despesas');
       const data = await res.json();
@@ -218,7 +307,7 @@ export default function DeputadoDetailPage({
 
   const handlePageChange = (page: number) => {
     if (deputadoId) {
-      fetchDespesas(deputadoId, page);
+      fetchDespesas(deputadoId, page, undefined, month > 0 ? month : undefined);
     }
   };
 
@@ -251,6 +340,35 @@ export default function DeputadoDetailPage({
 
   const totalGasto = stats?.totalGeral || 0;
   const categorias = stats?.gastosPorCategoria || [];
+  const selectedMonthLabel = month > 0 ? MONTH_LABELS[month - 1] : null;
+  const stateComparison = stateAverage
+    ? (() => {
+        const diff = totalGasto - stateAverage.mediaGeral;
+        const tolerance = Math.max(stateAverage.mediaGeral * 0.02, 100);
+        if (diff > tolerance) {
+          return {
+            direction: 'up' as const,
+            label: 'Acima da média estadual',
+            color: 'text-red-400',
+            diffDisplay: formatCurrency(diff),
+          };
+        }
+        if (diff < -tolerance) {
+          return {
+            direction: 'down' as const,
+            label: 'Abaixo da média estadual',
+            color: 'text-green-400',
+            diffDisplay: formatCurrency(Math.abs(diff)),
+          };
+        }
+        return {
+          direction: 'equal' as const,
+          label: 'Na média estadual',
+          color: 'text-yellow-900',
+          diffDisplay: formatCurrency(Math.abs(diff)),
+        };
+      })()
+    : null;
 
   // Preparar dados para o gráfico de pizza
   const chartData = categorias.map((cat, index) => ({
@@ -281,6 +399,15 @@ export default function DeputadoDetailPage({
               <h1 className="text-3xl md:text-4xl font-bold mb-2 text-yellow-500">
                 {deputado.nome}
               </h1>
+              <div className="flex justify-center md:justify-start mb-4">
+                <Link
+                  href={`/compare?primary=${deputado.id}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400 transition-colors"
+                >
+                  Comparar
+                  <span aria-hidden="true">↔</span>
+                </Link>
+              </div>
               <div className="flex flex-wrap gap-4 justify-center md:justify-start mt-4">
                 <div className="bg-gray-800 px-4 py-2 rounded-lg border border-gray-700">
                   <span className="text-gray-400 text-sm block">Partido</span>
@@ -304,7 +431,7 @@ export default function DeputadoDetailPage({
         </div>
 
         {/* Filtro de Ano */}
-        <div className="mb-6 flex justify-between items-center bg-gray-900 rounded-lg p-4 border border-gray-800">
+        <div className="mb-6 flex flex-wrap gap-6 justify-between items-center bg-gray-900 rounded-lg p-4 border border-gray-800">
           <div className="flex items-center gap-3" ref={yearDropdownRef}>
             <span className="text-gray-300 text-sm font-medium">Filtrar por ano:</span>
             <div className="relative inline-block">
@@ -359,13 +486,74 @@ export default function DeputadoDetailPage({
               )}
             </div>
           </div>
+          <div className="flex items-center gap-3" ref={monthDropdownRef}>
+            <span className="text-gray-300 text-sm font-medium">Filtrar por mês:</span>
+            <div className="relative inline-block min-w-[12rem]">
+              <button
+                type="button"
+                onClick={() => setIsMonthDropdownOpen((prev) => !prev)}
+                className="bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 text-sm font-medium hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-colors cursor-pointer flex items-center justify-between gap-2 w-full"
+                aria-haspopup="listbox"
+                aria-expanded={isMonthDropdownOpen}
+              >
+                {availableMonths.find((option) => option.value === month)?.label}
+                <svg
+                  className={`w-4 h-4 transition-transform ${isMonthDropdownOpen ? 'rotate-180' : ''}`}
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5.5 7.5L10 12L14.5 7.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              {isMonthDropdownOpen && (
+                <div
+                  className="absolute left-0 top-full mt-2 w-full bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
+                  role="listbox"
+                >
+                  {availableMonths.map((optionMonth) => (
+                    <button
+                      key={optionMonth.value}
+                      type="button"
+                      onClick={() => {
+                        setMonth(optionMonth.value);
+                        setIsMonthDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                        month === optionMonth.value
+                          ? 'bg-yellow-500 text-black font-semibold'
+                          : 'text-white hover:bg-gray-700'
+                      }`}
+                      role="option"
+                      aria-selected={month === optionMonth.value}
+                    >
+                      {optionMonth.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Total de gastos destacado */}
         <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg p-8 mb-8 text-center">
-          <p className="text-gray-900 text-sm md:text-base mb-2 font-medium">
-            Total de Gastos em {year}
-          </p>
+          { selectedMonthLabel ? (
+            <p className="text-gray-900 text-sm md:text-base mb-2 font-medium">
+              Total de Gastos em {selectedMonthLabel} de {year}
+            </p>
+          ): (
+            <p className="text-gray-900 text-sm md:text-base mb-2 font-medium">
+              Total de Gastos em {year}
+            </p>
+          )}
+          
           <h2 className="text-4xl md:text-6xl font-bold text-black">
             {formatCurrency(totalGasto)}
           </h2>
@@ -374,7 +562,123 @@ export default function DeputadoDetailPage({
               {stats.totalDespesas} despesas registradas
             </p>
           )}
+          {stateComparison && (
+            <div className="mt-4 flex flex-col items-center gap-1">
+              <div className={`flex items-center gap-2 text-sm font-semibold ${stateComparison.color}`}>
+                <span className="inline-flex items-center justify-center rounded-full bg-black/20 p-2">
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {stateComparison.direction === 'up' && (
+                      <path d="M10 4l4.5 4.5h-3v7h-3v-7h-3L10 4z" />
+                    )}
+                    {stateComparison.direction === 'down' && (
+                      <path d="M10 16l-4.5-4.5h3v-7h3v7h3L10 16z" />
+                    )}
+                    {stateComparison.direction === 'equal' && (
+                      <path d="M5 9h10v2H5z" />
+                    )}
+                  </svg>
+                </span>
+                <span>{stateComparison.label}</span>
+              </div>
+              <p className="text-xs text-gray-900 font-medium">
+                Diferença de {stateComparison.diffDisplay} em relação à média por deputado no estado
+              </p>
+            </div>
+          )}
         </div>
+
+        {/* Média de gastos do estado */}
+        {/* {stateAverage && (
+          <div className="bg-gray-900 rounded-lg p-6 mb-8 border border-gray-800">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+              <div>
+                <h2 className="text-2xl font-bold text-yellow-500 mb-2">
+                  Média estadual ({deputado.siglaUf})
+                </h2>
+                <p className="text-gray-400 text-sm">
+                  {selectedMonthLabel ? (
+                    <>
+                      {selectedMonthLabel} de {year}
+                    </>
+                  ) : (
+                    <>Ano de {year}</>
+                  )}
+                </p>
+                <p className="text-gray-400 text-sm mt-2">
+                  Considerando {stateAverage.totalDeputadosConsiderados}{' '}
+                  {stateAverage.totalDeputadosConsiderados === 1 ? 'deputado' : 'deputados'} com despesas
+                  (de {stateAverage.totalDeputadosEstado}{' '}
+                  {stateAverage.totalDeputadosEstado === 1 ? 'parlamentar' : 'parlamentares'} no estado)
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+                <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
+                  <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
+                    Média por deputado
+                  </p>
+                  <p className="text-2xl font-bold text-yellow-500">
+                    {formatCurrency(stateAverage.mediaGeral)}
+                  </p>
+                </div>
+                <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
+                  <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">
+                    Total gasto pelo estado
+                  </p>
+                  <p className="text-2xl font-bold text-yellow-500">
+                    {formatCurrency(stateAverage.totalGastos)}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {stateAverage.mediaPorCategoria.length > 0 && (
+              <div className="mt-6">
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Média por categoria no estado
+                </h3>
+                <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
+                  {stateAverage.mediaPorCategoria.map((cat, index) => (
+                    <div
+                      key={`${cat.tipo}-${index}`}
+                      className="flex items-center justify-between p-3 bg-gray-800 rounded-lg border border-gray-700"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="w-4 h-4 rounded-full"
+                          style={{
+                            backgroundColor: COLORS[index % COLORS.length],
+                          }}
+                        />
+                        <div>
+                          <p className="font-medium text-sm text-white">
+                            {cat.tipo}
+                          </p>
+                          <p className="text-gray-400 text-xs">
+                            {cat.deputadosComDespesa}{' '}
+                            {cat.deputadosComDespesa === 1 ? 'deputado' : 'deputados'}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-yellow-500 text-sm">
+                          Média: {formatCurrency(cat.media)}
+                        </p>
+                        <p className="text-gray-400 text-xs">
+                          Total: {formatCurrency(cat.total)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )} */}
 
         {/* Gráfico de Pizza - Gastos por Categoria */}
         {categorias.length > 0 && (
