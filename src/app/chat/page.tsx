@@ -10,7 +10,7 @@ interface Message {
 const EXAMPLE_QUESTIONS = [
   "Qual o top 5 deputados que mais gastaram em 2025?",
   "Qual o principal fornecedor do deputado Bandeira de Mello?",
-  "Qual os gastos do deputado Nikolas Ferreira apenas com transporte no ano de 2025?"
+  "Qual os gastos da deputada Alice Portugal apenas com transporte no ano de 2025?"
 ];
 
 export default function ChatPage() {

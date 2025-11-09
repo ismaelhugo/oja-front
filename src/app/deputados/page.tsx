@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Deputado {
   id_local: number;
@@ -425,23 +426,14 @@ export default function DeputadosPage() {
                     <div className={`flex gap-2 ${
                       viewMode === 'list' ? 'flex-col' : 'flex-row'
                     }`}>
-                      {deputado.uri && (
-                        <a
-                          href={deputado.uri}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`bg-gray-700 hover:bg-gray-600 text-white text-center py-2 px-3 rounded-lg text-xs transition-colors duration-300 ${
-                            viewMode === 'list' ? 'flex-shrink-0' : 'flex-1'
-                          }`}
-                        >
-                          Ver Perfil
-                        </a>
-                      )}
-                      <button className={`bg-yellow-400 hover:bg-yellow-500 text-black py-2 px-3 rounded-lg text-xs font-medium transition-colors duration-300 ${
-                        viewMode === 'list' ? 'flex-shrink-0' : 'flex-1'
-                      }`}>
+                      <Link
+                        href={`/deputados/${deputado.id}`}
+                        className={`bg-yellow-400 hover:bg-yellow-500 text-black py-2 px-3 rounded-lg text-xs font-medium transition-colors duration-300 text-center block ${
+                          viewMode === 'list' ? 'flex-shrink-0' : 'flex-1'
+                        }`}
+                      >
                         Ver Gastos
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

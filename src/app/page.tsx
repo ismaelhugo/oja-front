@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -151,7 +152,6 @@ export default function Home() {
           playsInline
         >
           <source src="https://videos.pexels.com/video-files/7710243/7710243-uhd_3840_2160_25fps.mp4" type="video/mp4" />
-          {/* Fallback para navegadores que não suportam vídeo */}
         </video>
         
         {/* Video Overlay */}
@@ -177,20 +177,8 @@ export default function Home() {
                 Operação <span className="gradient-text">Janela Aberta</span>
               </h1>
               <p className="text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed">
-                Transparência e acesso à informação pública no Brasil através de inteligência artificial
+                Inteligência artificial para análise completa dos gastos públicos. Converse naturalmente e obtenha insights profundos sobre despesas de deputados federais.
               </p>
-              <div className="bg-yellow-400/20 border-2 border-yellow-400 rounded-lg p-6 backdrop-blur-sm hover-lift shimmer">
-                <p className="text-yellow-300 font-bold text-lg mb-2">🚀 Em breve</p>
-                <p className="text-gray-300 mb-4">
-                  Estamos finalizando os últimos detalhes para trazer transparência completa aos gastos públicos
-                </p>
-                {/* <a
-                  href="/deputados"
-                  className="inline-block bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-lg transition-colors duration-300 text-sm"
-                >
-                  Ver Lista de Deputados
-                </a> */}
-              </div>
             </div>
             <div className="flex-1 lg:flex-none parallax-element" data-speed="0.1">
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 hover-lift card-animate">
@@ -206,13 +194,22 @@ export default function Home() {
                 </div>
                 <div className="bg-blue-50 rounded-lg p-4 mb-4 hover-scale">
                   <p className="text-blue-900 font-medium">
-                    💡 Nossa IA analisará os dados do CEAP e responderá suas perguntas sobre gastos públicos
+                    💡 Nossa IA entende rankings, médias, comparações e análises estatísticas complexas
                   </p>
                 </div>
-                <div className="text-center">
-                  <span className="inline-block bg-yellow-400/20 border border-yellow-400 text-yellow-300 px-3 py-1 rounded-full text-sm font-medium hover-glow">
-                    Em Desenvolvimento
-                  </span>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                  <Link 
+                    href="/chat" 
+                    className="inline-block bg-green-400/20 border border-green-400 text-green-300 px-4 py-2 rounded-full text-sm font-medium hover-glow cursor-pointer transition-all hover:bg-green-400/30 hover:scale-105"
+                  >
+                    Experimente Agora
+                  </Link>
+                  <Link 
+                    href="/deputados" 
+                    className="inline-block bg-yellow-400/20 border border-yellow-400 text-yellow-300 px-4 py-2 rounded-full text-sm font-medium hover-glow cursor-pointer transition-all hover:bg-yellow-400/30 hover:scale-105"
+                  >
+                    Explore Deputados
+                  </Link>
                 </div>
               </div>
             </div>
@@ -228,53 +225,57 @@ export default function Home() {
               Nossa Missão
             </h2>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8">
-              Democratizar o acesso à informação pública e fortalecer a transparência democrática no Brasil, 
-              capacitando cada cidadão a exercer seu direito de fiscalização dos gastos públicos.
+              Democratizar o acesso à informação pública através de inteligência artificial, tornando análises complexas 
+              de gastos públicos acessíveis a todos através de conversas naturais.
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center p-8 bg-gray-900 rounded-2xl border border-gray-700 hover-lift card-animate">
               <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 hover-glow">
-                <span className="text-2xl text-white">🏛️</span>
+                <span className="text-2xl text-white">🤖</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Fortalecer a Democracia</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">IA Conversacional</h3>
               <p className="text-gray-300 leading-relaxed">
-                Contribuir para uma sociedade mais justa através da transparência e do controle social efetivo dos recursos públicos.
+                Converse naturalmente com nossa IA. Faça perguntas sobre rankings, médias, comparações e análises estatísticas complexas.
               </p>
             </div>
             
             <div className="text-center p-8 bg-gray-800 rounded-2xl border border-yellow-500/20 hover-lift card-animate">
               <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 hover-glow float-animation">
-                <span className="text-2xl text-black">👥</span>
+                <span className="text-2xl text-black">📊</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Empoderar Cidadãos</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">Análises Profundas</h3>
               <p className="text-gray-300 leading-relaxed">
-                Tornar informações complexas acessíveis a todos, independente do conhecimento técnico, promovendo participação cidadã ativa.
+                Rankings, comparações, médias e estatísticas detalhadas sobre gastos de deputados, partidos e estados.
               </p>
             </div>
             
             <div className="text-center p-8 bg-gray-900 rounded-2xl border border-gray-700 hover-lift card-animate">
               <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 hover-glow">
-                <span className="text-2xl text-white">⚖️</span>
+                <span className="text-2xl text-white">⚡</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Promover Accountability</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">Respostas Rápidas</h3>
               <p className="text-gray-300 leading-relaxed">
-                Facilitar o acompanhamento e a fiscalização dos gastos públicos, incentivando responsabilidade e ética na gestão pública.
+                Análises complexas processadas em segundos, com visualizações interativas e gráficos dinâmicos.
               </p>
             </div>
           </div>
-
-          {/* Impacto Social */}
-          <div className="mt-16 bg-gradient-to-r from-blue-600/10 to-yellow-500/10 rounded-2xl p-8 border border-blue-500/20">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Nosso Impacto Social</h3>
-              <p className="text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                Acreditamos que a transparência é a base da democracia. Ao tornar os dados públicos acessíveis e compreensíveis, 
-                capacitamos jornalistas, pesquisadores, organizações da sociedade civil e cidadãos comuns a exercerem 
-                o controle social e a cobrarem prestação de contas dos seus representantes.
-              </p>
-            </div>
+          
+          {/* CTAs na seção Missão */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+            <Link 
+              href="/chat" 
+              className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium cursor-pointer transition-all hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              Conversar com IA
+            </Link>
+            <Link 
+              href="/deputados" 
+              className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-lg font-medium cursor-pointer transition-all hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              Ver Deputados
+            </Link>
           </div>
         </div>
       </section>
@@ -284,76 +285,93 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
-              A plataforma
+              Funcionalidades Principais
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Ferramentas poderosas para análise e compreensão dos gastos públicos
+              Uma plataforma completa para análise inteligente de gastos públicos
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
             <div>
-              <div className="space-y-8">
-                {/* Funcionalidade Principal - Agente LLM */}
-                <div className="flex gap-4 hover-lift bg-gradient-to-r from-yellow-500/20 to-orange-500/20 p-4 rounded-lg border border-yellow-500/30">
-                  <div className="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
-                    <span className="text-black text-xl">🤖</span>
+              <div className="space-y-6">
+                {/* Agente LLM */}
+                <div className="flex gap-4 hover-lift bg-gradient-to-r from-yellow-500/20 to-orange-500/20 p-6 rounded-lg border border-yellow-500/30">
+                  <div className="w-14 h-14 bg-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
+                    <span className="text-black text-2xl">🤖</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                    <h3 className="text-xl font-bold text-white mb-2">
                       Agente IA Conversacional
                     </h3>
                     <p className="text-gray-300">
-                      Converse com nossa IA em linguagem natural para obter análises detalhadas dos gastos públicos. 
-                      Faça perguntas complexas e receba respostas precisas baseadas nos dados do CEAP.
+                      Converse em português natural. Nossa IA entende contexto, interpreta perguntas complexas e fornece 
+                      respostas precisas sobre rankings, médias, comparações e análises estatísticas dos gastos públicos.
                     </p>
                   </div>
                 </div>
                 
-                <div className="flex gap-4 hover-lift">
-                  <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
-                    <span className="text-white text-xl">📈</span>
+                <div className="flex gap-4 hover-lift bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+                  <div className="w-14 h-14 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
+                    <span className="text-white text-2xl">📈</span>
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white mb-2">Gráficos Interativos</h3>
                     <p className="text-gray-300">
-                      Visualizações dinâmicas dos gastos por categoria, período e deputado
+                      Visualizações dinâmicas de gastos por categoria, período, deputado, partido e estado. 
+                      Gráficos atualizados em tempo real conforme você explora os dados.
                     </p>
                   </div>
                 </div>
                 
-                <div className="flex gap-4 hover-lift">
-                  <div className="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
-                    <span className="text-white text-xl">⚖️</span>
+                <div className="flex gap-4 hover-lift bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+                  <div className="w-14 h-14 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
+                    <span className="text-white text-2xl">🏆</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Comparações</h3>
+                    <h3 className="text-xl font-bold text-white mb-2">Rankings Inteligentes</h3>
                     <p className="text-gray-300">
-                      Compare gastos entre deputados, estados e partidos políticos
+                      Rankings de deputados, partidos e estados por diferentes critérios: maiores gastos, menores gastos, 
+                      médias, por categoria de despesa e muito mais.
                     </p>
                   </div>
                 </div>
                 
-                <div className="flex gap-4 hover-lift">
-                  <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
-                    <span className="text-white text-xl">🏆</span>
+                <div className="flex gap-4 hover-lift bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+                  <div className="w-14 h-14 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
+                    <span className="text-white text-2xl">⚖️</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Rankings</h3>
+                    <h3 className="text-xl font-bold text-white mb-2">Comparações Avançadas</h3>
                     <p className="text-gray-300">
-                      Rankings de gastos por diferentes categorias e critérios
+                      Compare gastos entre deputados, partidos políticos, estados e períodos diferentes. 
+                      Análise lado a lado com métricas detalhadas.
                     </p>
                   </div>
                 </div>
                 
-                <div className="flex gap-4 hover-lift">
-                  <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
-                    <span className="text-white text-xl">🏢</span>
+                <div className="flex gap-4 hover-lift bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+                  <div className="w-14 h-14 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
+                    <span className="text-white text-2xl">📊</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Estatísticas e Médias</h3>
+                    <p className="text-gray-300">
+                      Calcule médias de gastos por partido, estado, categoria. Análise estatística completa com 
+                      totais, mínimos, máximos e distribuições.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 hover-lift bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+                  <div className="w-14 h-14 bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0 hover-glow">
+                    <span className="text-white text-2xl">🏢</span>
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white mb-2">Análise de Fornecedores</h3>
                     <p className="text-gray-300">
-                      Identifique principais fornecedores e padrões de contratação
+                      Identifique principais fornecedores, padrões de contratação e empresas que mais receberam 
+                      recursos públicos de deputados.
                     </p>
                   </div>
                 </div>
@@ -362,158 +380,165 @@ export default function Home() {
             
             <div className="bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-700">
               <h3 className="text-2xl font-bold text-white mb-6">Exemplos de Consultas</h3>
-              <p className="text-gray-400 text-sm mb-4">Clique nos exemplos para ver como diferentes tipos de perguntas podem ser feitas:</p>
+              <p className="text-gray-400 text-sm mb-6">
+                Nossa IA responde perguntas complexas sobre rankings, médias, comparações e análises estatísticas:
+              </p>
               <div className="space-y-4">
                 <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
                   <p className="text-gray-200 font-medium">
-                    "Quanto o deputado Eduardo Bolsonaro gastou em 2024 com combustível?"
+                    "Qual o partido que tem a menor média de gasto em 2025?"
                   </p>
                 </div>
                 <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
                   <p className="text-gray-200 font-medium">
-                    "Quais são os principais fornecedores do deputado Marcelo Freixo?"
+                    "Ranking dos deputados que mais gastaram com passagens aéreas"
                   </p>
                 </div>
                 <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
                   <p className="text-gray-200 font-medium">
-                    "Compare os gastos com passagens aéreas entre deputados de SP"
+                    "Compare os gastos entre PT e PL em 2024"
                   </p>
                 </div>
                 <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
                   <p className="text-gray-200 font-medium">
-                    "Mostre o ranking de gastos com alimentação em 2024"
+                    "Qual a média de gastos dos deputados de São Paulo?"
                   </p>
                 </div>
                 <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
                   <p className="text-gray-200 font-medium">
-                    "Qual o total gasto por deputados do PT em divulgação parlamentar?"
+                    "Deputados que menos gastaram em 2025"
+                  </p>
+                </div>
+                <div className="query-example bg-gray-700 rounded-lg p-4 border border-gray-600">
+                  <p className="text-gray-200 font-medium">
+                    "Gasto médio mensal do deputado Benedita da Silva"
                   </p>
                 </div>
               </div>
               <div className="mt-6 pt-4 border-t border-gray-700">
                 <p className="text-gray-400 text-xs text-center">
-                  💡 Dica: Nossa IA entende perguntas em linguagem natural e pode responder sobre qualquer aspecto dos gastos públicos
+                  💡 A IA entende contexto e pode responder perguntas de acompanhamento como "E o gasto médio por mês?"
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* Cards de Destaque */}
+          <div className="grid md:grid-cols-3 gap-6 mt-12">
+            <div className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 rounded-xl p-6 border border-blue-500/30 hover-lift">
+              <div className="text-3xl mb-3">🎯</div>
+              <h4 className="text-white font-bold mb-2">Análise Contextual</h4>
+              <p className="text-gray-300 text-sm">
+                A IA entende o contexto da conversa e pode responder perguntas de acompanhamento sem precisar repetir informações.
+              </p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-green-600/20 to-green-800/20 rounded-xl p-6 border border-green-500/30 hover-lift">
+              <div className="text-3xl mb-3">⚡</div>
+              <h4 className="text-white font-bold mb-2">Respostas Instantâneas</h4>
+              <p className="text-gray-300 text-sm">
+                Análises complexas processadas em menos de 2 segundos, mesmo para consultas envolvendo milhões de registros.
+              </p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 rounded-xl p-6 border border-purple-500/30 hover-lift">
+              <div className="text-3xl mb-3">🔍</div>
+              <h4 className="text-white font-bold mb-2">Busca Inteligente</h4>
+              <p className="text-gray-300 text-sm">
+                Filtre por ano, mês, legislatura, partido, estado ou período específico. A IA adapta a análise ao que você precisa.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Como Funciona - Processo Técnico */}
+      {/* Como Funciona - Fluxo do Agente IA */}
       <section className="bg-slate-900 py-16 lg:py-24">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
-              Como Funciona
+              Como Funciona o Agente IA
             </h2>
             <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-6">
-              Processo transparente e confiável de coleta, processamento e consulta de dados públicos
+              Processo inteligente que transforma sua pergunta em análise completa dos gastos públicos
             </p>
-            
-            {/* Open Source Badge */}
-            <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8">
-              <div className="bg-gray-800 border border-yellow-500/30 rounded-full px-6 py-3 w-full md:w-auto">
-                <div className="flex flex-col md:flex-row items-center md:gap-3 hover-glow">
-                  <span className="text-2xl mb-2 md:mb-0">🌟</span>
-                  <div className="text-center md:text-left">
-                    <p className="text-yellow-400 font-semibold text-sm">Projeto Open Source</p>
-                    <p className="text-gray-300 text-xs">Código aberto, transparente e colaborativo</p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-800 border border-green-500/30 rounded-full px-6 py-3 w-full md:w-auto">
-                <div className="flex flex-col md:flex-row items-center md:gap-3 hover-glow">
-                  <span className="text-2xl mb-2 md:mb-0">🚀</span>
-                  <div className="text-center md:text-left">
-                    <p className="text-green-400 font-semibold text-sm">Contribuições Bem-vindas</p>
-                    <p className="text-gray-300 text-xs">Participe do desenvolvimento no GitHub</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Pipeline Visual */}
           <div className="max-w-7xl mx-auto mb-16">
-            <div className="grid lg:grid-cols-4 gap-8 mb-12">
+            <div className="grid lg:grid-cols-5 gap-6 mb-12">
               
-              {/* Etapa 1: Coleta */}
+              {/* Etapa 1: Pergunta */}
               <div className="pipeline-step hover-lift relative">
                 <div className="flow-step-number">1</div>
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
-                    <span className="text-black text-2xl">🔗</span>
+                  <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
+                    <span className="text-white text-2xl">💬</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3">Coleta Automática</h3>
+                  <h3 className="text-xl font-bold text-white mb-3">Você Pergunta</h3>
                   <p className="text-gray-300 text-sm mb-4 leading-relaxed">
-                    Dados coletados diretamente da API oficial da Câmara dos Deputados
+                    Faça perguntas em linguagem natural sobre gastos, rankings, médias ou comparações
                   </p>
-                  <div className="flex flex-wrap justify-center gap-1">
-                    <span className="tech-badge">REST API</span>
-                    <span className="tech-badge">HTTPS</span>
-                    <span className="tech-badge">JSON</span>
-                  </div>
                 </div>
                 <div className="pipeline-connector hidden lg:block"></div>
               </div>
 
-              {/* Etapa 2: Transformação */}
+              {/* Etapa 2: Interpretação */}
               <div className="pipeline-step hover-lift relative">
                 <div className="flow-step-number">2</div>
                 <div className="text-center">
                   <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
-                    <span className="text-black text-2xl">⚙️</span>
+                    <span className="text-black text-2xl">🧠</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3">Processamento</h3>
+                  <h3 className="text-xl font-bold text-white mb-3">IA Interpreta</h3>
                   <p className="text-gray-300 text-sm mb-4 leading-relaxed">
-                    Limpeza, validação e estruturação dos dados brutos
+                    O agente IA analisa sua pergunta, identifica o tipo de consulta e seleciona as ferramentas adequadas
                   </p>
-                  <div className="flex flex-wrap justify-center gap-1">
-                    <span className="tech-badge">ETL Pipeline</span>
-                    <span className="tech-badge">Data Validation</span>
-                    <span className="tech-badge">PostgreSQL</span>
-                  </div>
                 </div>
                 <div className="pipeline-connector hidden lg:block"></div>
               </div>
 
-              {/* Etapa 3: Indexação */}
+              {/* Etapa 3: Busca */}
               <div className="pipeline-step hover-lift relative">
                 <div className="flow-step-number">3</div>
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
-                    <span className="text-black text-2xl">🗂️</span>
+                  <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
+                    <span className="text-white text-2xl">🔍</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3">Indexação IA</h3>
+                  <h3 className="text-xl font-bold text-white mb-3">Busca no Banco</h3>
                   <p className="text-gray-300 text-sm mb-4 leading-relaxed">
-                    Vetorização para consultas em linguagem natural
+                    Consulta otimizada no banco de dados com milhões de despesas, aplicando filtros e agregações necessárias
                   </p>
-                  <div className="flex flex-wrap justify-center gap-1">
-                    <span className="tech-badge">Vector DB</span>
-                    <span className="tech-badge">Embeddings</span>
-                    <span className="tech-badge">Semantic Search</span>
-                  </div>
                 </div>
                 <div className="pipeline-connector hidden lg:block"></div>
               </div>
 
-              {/* Etapa 4: Consulta */}
+              {/* Etapa 4: Processamento */}
               <div className="pipeline-step hover-lift relative">
                 <div className="flow-step-number">4</div>
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
-                    <span className="text-black text-2xl">🤖</span>
+                  <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
+                    <span className="text-white text-2xl">⚙️</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3">IA Conversacional</h3>
+                  <h3 className="text-xl font-bold text-white mb-3">Processa Dados</h3>
                   <p className="text-gray-300 text-sm mb-4 leading-relaxed">
-                    Interface conversacional para perguntas em português
+                    Cálculos de médias, rankings, comparações e estatísticas são processados com precisão
                   </p>
-                  <div className="flex flex-wrap justify-center gap-1">
-                    <span className="tech-badge">LLM</span>
-                    <span className="tech-badge">RAG</span>
-                    <span className="tech-badge">Natural Language</span>
+                </div>
+                <div className="pipeline-connector hidden lg:block"></div>
+              </div>
+
+              {/* Etapa 5: Resposta */}
+              <div className="pipeline-step hover-lift relative">
+                <div className="flow-step-number">5</div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-4 hover-glow">
+                    <span className="text-white text-2xl">📊</span>
                   </div>
+                  <h3 className="text-xl font-bold text-white mb-3">Resposta Completa</h3>
+                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                    Resposta formatada com dados precisos, gráficos e visualizações interativas quando aplicável
+                  </p>
                 </div>
               </div>
             </div>
@@ -522,222 +547,83 @@ export default function Home() {
           {/* Fluxo de Consulta Detalhado */}
           <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700 data-wave">
             <h3 className="text-2xl font-bold text-white mb-8 text-center">
-              Fluxo de Consulta em Tempo Real
+              Exemplo de Conversa com o Agente
             </h3>
-            <div className="grid md:grid-cols-9 gap-2 items-center">
-              <div className="text-center flow-step-animated">
-                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
-                  <span className="text-white">👤</span>
-                </div>
-                <p className="text-gray-300 text-sm">Usuário faz pergunta</p>
+            <div className="space-y-4 max-w-4xl mx-auto">
+              <div className="bg-blue-900/30 rounded-lg p-4 border border-blue-500/30">
+                <p className="text-blue-200 text-sm mb-1">👤 Você pergunta:</p>
+                <p className="text-white font-medium">"Qual o partido que tem a menor média de gasto?"</p>
               </div>
-              
-              <div className="text-center flow-arrow-animated">
-                <span className="flow-arrow hidden md:block text-yellow-400 text-xl animate-pulse">→</span>
+              <div className="bg-yellow-900/30 rounded-lg p-4 border border-yellow-500/30">
+                <p className="text-yellow-200 text-sm mb-1">🤖 Agente IA responde:</p>
+                <p className="text-white">"O partido com menor média de gasto em 2025 é o <strong>CIDADANIA</strong>, com uma média de R$ 180.176,03 por deputado..."</p>
               </div>
-              
-              <div className="text-center flow-step-animated">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
-                  <span className="text-black">🔍</span>
-                </div>
-                <p className="text-gray-300 text-sm">Análise semântica</p>
+              <div className="bg-blue-900/30 rounded-lg p-4 border border-blue-500/30">
+                <p className="text-blue-200 text-sm mb-1">👤 Você pergunta:</p>
+                <p className="text-white font-medium">"E qual os deputados do partido?"</p>
               </div>
-              
-              <div className="text-center flow-arrow-animated">
-                <span className="flow-arrow hidden md:block text-yellow-400 text-xl animate-pulse">→</span>
-              </div>
-              
-              <div className="text-center flow-step-animated">
-                <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
-                  <span className="text-white">🗃️</span>
-                </div>
-                <p className="text-gray-300 text-sm">Busca no banco</p>
-              </div>
-              
-              <div className="text-center flow-arrow-animated">
-                <span className="flow-arrow hidden md:block text-yellow-400 text-xl animate-pulse">→</span>
-              </div>
-              
-              <div className="text-center flow-step-animated">
-                <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
-                  <span className="text-white">🤖</span>
-                </div>
-                <p className="text-gray-300 text-sm">IA processa contexto</p>
-              </div>
-              
-              <div className="text-center flow-arrow-animated">
-                <span className="flow-arrow hidden md:block text-yellow-400 text-xl animate-pulse">→</span>
-              </div>
-              
-              <div className="text-center flow-step-animated">
-                <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-2 data-flow-circle">
-                  <span className="text-white">📊</span>
-                </div>
-                <p className="text-gray-300 text-sm">Resposta formatada</p>
+              <div className="bg-yellow-900/30 rounded-lg p-4 border border-yellow-500/30">
+                <p className="text-yellow-200 text-sm mb-1">🤖 Agente IA responde:</p>
+                <p className="text-white">"Os deputados do partido CIDADANIA são: • Alex Manente (CIDADANIA/SP) • Amom Mandel (CIDADANIA/AM)..."</p>
               </div>
             </div>
             
-            {/* Indicador de performance */}
+            {/* Indicadores */}
             <div className="mt-8 pt-6 border-t border-gray-700">
-              <div className="flex justify-center items-center gap-8 text-sm">
+              <div className="flex flex-wrap justify-center items-center gap-8 text-sm">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-gray-300">Tempo médio: &lt;2s</span>
+                  <span className="text-gray-300">Resposta em &lt;2s</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                  <span className="text-gray-300">Processamento em tempo real</span>
+                  <span className="text-gray-300">Contexto preservado</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
-                  <span className="text-gray-300">Resposta contextualizada</span>
+                  <span className="text-gray-300">Dados precisos e atualizados</span>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Garantias de Qualidade */}
-          <div className="mt-16 text-center">
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover-lift">
-                <div className="text-green-400 text-3xl mb-4">✅</div>
-                <h4 className="text-white font-bold mb-2">Dados Verificados</h4>
-                <p className="text-gray-300 text-sm">
-                  Validação automática contra a fonte oficial a cada atualização
-                </p>
-              </div>
-              
-              <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover-lift">
-                <div className="text-blue-400 text-3xl mb-4">🔄</div>
-                <h4 className="text-white font-bold mb-2">Atualização Contínua</h4>
-                <p className="text-gray-300 text-sm">
-                  Sincronização diária com os dados mais recentes da Câmara
-                </p>
-              </div>
-              
-              <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover-lift">
-                <div className="text-yellow-400 text-3xl mb-4">🛡️</div>
-                <h4 className="text-white font-bold mb-2">Transparência Total</h4>
-                <p className="text-gray-300 text-sm">
-                  Código aberto e metodologia de processamento documentada
-                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Open Source e Colaboração */}
+      {/* Garantias de Qualidade */}
       <section className="bg-gray-900 py-16 lg:py-20">
         <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 flex items-center justify-center gap-4">
-                <span className="text-4xl">🌍</span>
-                Projeto Open Source
-              </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                Acreditamos na transparência total. Por isso, todo o código fonte do projeto está disponível publicamente, 
-                permitindo auditoria, colaboração e melhorias contínuas da comunidade.
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+              Dados Confiáveis e Atualizados
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Garantimos precisão e transparência em todas as análises
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover-lift">
+              <div className="text-green-400 text-4xl mb-4">✅</div>
+              <h4 className="text-white font-bold mb-3 text-lg">Dados Verificados</h4>
+              <p className="text-gray-300">
+                Validação automática contra a API oficial da Câmara dos Deputados a cada atualização
               </p>
             </div>
-
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Benefícios Open Source */}
-              <div className="space-y-6">
-                <div className="flex items-start gap-4 hover-lift">
-                  <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-xl">🔍</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Transparência Completa</h3>
-                    <p className="text-gray-300">
-                      Todo o processo de coleta, tratamento e apresentação dos dados pode ser auditado pela comunidade.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 hover-lift">
-                  <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-xl">🤝</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Colaboração Comunitária</h3>
-                    <p className="text-gray-300">
-                      Desenvolvedores, jornalistas e cidadãos podem contribuir com melhorias, correções e novas funcionalidades.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 hover-lift">
-                  <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-xl">🔧</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Evolução Contínua</h3>
-                    <p className="text-gray-300">
-                      A comunidade pode sugerir melhorias, reportar problemas e participar do desenvolvimento de novas features.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Call to Action para GitHub */}
-              <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700">
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span className="text-black text-3xl">💻</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Participe do Desenvolvimento</h3>
-                  <p className="text-gray-300 mb-6 leading-relaxed">
-                    Este é um projeto <strong>open source</strong> que aceita contribuições via <strong>fork + pull request</strong>. 
-                    Você pode contribuir com:
-                  </p>
-                  
-                  <div className="space-y-2 mb-8">
-                    <div className="tech-badge">🐛 Correções de bugs</div>
-                    <div className="tech-badge">✨ Novas funcionalidades</div>
-                    <div className="tech-badge">🎨 Melhorias de UI/UX</div>
-                    <div className="tech-badge">📚 Documentação</div>
-                    <div className="tech-badge">🧪 Testes automatizados</div>
-                  </div>
-
-                  <div className="bg-gray-700 rounded-lg p-4 border border-yellow-500/20 mb-6">
-                    <h4 className="text-yellow-300 font-semibold mb-2">Como Contribuir:</h4>
-                    <div className="text-left text-sm text-gray-300 space-y-1">
-                      <p>1. 🍴 <strong>Fork</strong> o repositório</p>
-                      <p>2. 🌿 Crie uma <strong>branch</strong> para sua feature</p>
-                      <p>3. 💻 Faça suas <strong>alterações</strong></p>
-                      <p>4. 🔃 Abra um <strong>Pull Request</strong></p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a
-                      href="https://github.com/ismaelhugo/oja-front"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-lg flex items-center gap-2"
-                    >
-                      <span>⭐</span>
-                      Ver no GitHub
-                    </a>
-                    <a
-                      href="https://github.com/ismaelhugo/oja-front/blob/main/CONTRIBUTING.md"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="border-2 border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-black font-bold py-3 px-6 rounded-lg transition-colors duration-300 flex items-center gap-2"
-                    >
-                      <span>📋</span>
-                      Guia de Contribuição
-                    </a>
-                  </div>
-
-                  <p className="text-gray-400 text-xs mt-4">
-                    💡 Todas as contribuições passam por revisão antes do merge
-                  </p>
-                </div>
-              </div>
+            
+            <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover-lift">
+              <div className="text-blue-400 text-4xl mb-4">🔄</div>
+              <h4 className="text-white font-bold mb-3 text-lg">Atualização Contínua</h4>
+              <p className="text-gray-300">
+                Sincronização diária com os dados mais recentes da Câmara, garantindo informações sempre atualizadas
+              </p>
+            </div>
+            
+            <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover-lift">
+              <div className="text-yellow-400 text-4xl mb-4">🛡️</div>
+              <h4 className="text-white font-bold mb-3 text-lg">Metodologia Transparente</h4>
+              <p className="text-gray-300">
+                Processamento e cálculos realizados de forma transparente, com todas as análises baseadas em dados públicos oficiais
+              </p>
             </div>
           </div>
         </div>
@@ -756,22 +642,11 @@ export default function Home() {
               />
               <div>
                 <p className="text-white font-bold">Operação Janela Aberta</p>
-                <p className="text-gray-400 text-sm">© 2025 - Transparência Pública</p>
+                <p className="text-gray-400 text-sm">© 2025 - Transparência Pública através de IA</p>
               </div>
             </div>
-            <div className="flex gap-6">
-              <a
-                href="https://github.com/ismaelhugo/oja-front"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors duration-300"
-              >
-                GitHub
-              </a>
-              <span className="text-gray-500">•</span>
-              <span className="text-gray-400">
-                Lançamento em Breve
-              </span>
+            <div className="text-gray-400 text-sm">
+              <p>Análise inteligente dos gastos públicos</p>
             </div>
           </div>
         </div>
@@ -779,3 +654,4 @@ export default function Home() {
     </div>
   );
 }
+
