@@ -566,3 +566,63 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Animação de moedas caindo estilo Mario Kart */
+@keyframes coinFall {
+  0% {
+    transform: translateY(-100px) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(calc(100vh + 100px)) rotateY(720deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.coin-fall {
+  animation: coinFall linear infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mario-coin {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) 
+          drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+  animation: coinSpin 0.5s linear infinite, coinPulse 2s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes coinSpin {
+  0% {
+    transform: rotateY(0deg) rotateX(0deg);
+  }
+  25% {
+    transform: rotateY(90deg) rotateX(10deg);
+  }
+  50% {
+    transform: rotateY(180deg) rotateX(0deg);
+  }
+  75% {
+    transform: rotateY(270deg) rotateX(-10deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateX(0deg);
+  }
+}
+
+@keyframes coinPulse {
+  0%, 100% {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) 
+            drop-shadow(0 0 8px rgba(255, 215, 0, 0.6))
+            brightness(1);
+  }
+  50% {
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5)) 
+            drop-shadow(0 0 16px rgba(255, 215, 0, 0.9))
+            brightness(1.2);
+  }
+}

@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -115,12 +118,27 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Header */}
+      <header className="bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
+              <Image
+                src="/image.png"
+                alt="Janela Aberta logo"
+                width={40}
+                height={40}
+              />
+            </Link>
+          </div>
+        </div>
+      </header>
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-            Operação Janela Aberta - Chat IA
+            Guardião da Transparência
           </h1>
           <button
             onClick={limparConversa}
@@ -153,7 +171,7 @@ export default function ChatPage() {
                   </svg>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                  Como posso ajudar?
+                  Olá! Sou o Guardião da Transparência. Como posso ajudar?
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400">
                   Pergunte sobre gastos de deputados federais
@@ -337,6 +355,7 @@ export default function ChatPage() {
           </p>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }

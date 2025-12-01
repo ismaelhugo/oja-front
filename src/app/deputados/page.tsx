@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 interface Deputado {
   id_local: number;
@@ -537,13 +538,7 @@ export default function DeputadosPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-8 border-t border-gray-700">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-gray-400 text-sm">
-            © 2025 Operação Janela Aberta - Dados obtidos da API oficial da Câmara dos Deputados
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

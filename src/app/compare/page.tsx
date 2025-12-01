@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
 
@@ -451,6 +452,21 @@ export default function ComparePage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* Header */}
+      <header className="bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
+              <Image
+                src="/image.png"
+                alt="Janela Aberta logo"
+                width={40}
+                height={40}
+              />
+            </Link>
+          </div>
+        </div>
+      </header>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
         <div className="flex items-center justify-between">
           <div>
@@ -589,6 +605,7 @@ export default function ComparePage() {
           onClose={() => setShowSelector(null)}
         />
       )}
+      <Footer />
     </div>
   );
 }
