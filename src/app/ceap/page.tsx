@@ -48,6 +48,7 @@ export default function CEAPPage() {
   const [estadoSelecionado, setEstadoSelecionado] = useState<string>('GERAL');
   const [anoSelecionado, setAnoSelecionado] = useState<number | 'TODA_LEGISLATURA'>(2025);
   const [totalGeral, setTotalGeral] = useState<TotalGeral | null>(null);
+  const [lastUpdate, setLastUpdate] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingFornecedores, setLoadingFornecedores] = useState(true);
   const [loadingGastometro, setLoadingGastometro] = useState(true);
@@ -96,6 +97,53 @@ export default function CEAPPage() {
 
     fetchEstados();
   }, []);
+
+  // Buscar última atualização
+  useEffect(() => {
+    const fetchLastUpdate = async () => {
+      try {
+        const response = await fetch(`${API_URL}/estatisticas/ultima-atualizacao`);
+        if (response.ok) {
+          const data = await response.json();
+          setLastUpdate(data.lastUpdate);
+        }
+      } catch (err) {
+        console.error('Erro ao buscar última atualização:', err);
+      }
+    };
+
+    fetchLastUpdate();
+  }, []);
+
+  // Função para formatar a última atualização
+  const formatLastUpdate = (dateString: string | null) => {
+    if (!dateString) return 'Carregando...';
+    
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffHours < 1) {
+      const diffMins = Math.floor(diffMs / (1000 * 60));
+      return `há ${diffMins} minuto${diffMins !== 1 ? 's' : ''}`;
+    } else if (diffHours < 24) {
+      return `há ${diffHours} hora${diffHours !== 1 ? 's' : ''}`;
+    } else if (diffDays === 1) {
+      return 'ontem';
+    } else if (diffDays < 7) {
+      return `há ${diffDays} dias`;
+    } else {
+      return date.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+  };
 
   // Buscar total geral quando ano mudar
   useEffect(() => {
@@ -357,6 +405,11 @@ export default function CEAPPage() {
                   <p className="text-lg font-bold">{totalGeral.totalDeputados}</p>
                 </div>
               </div>
+              {lastUpdate && (
+                <span className="block mt-4 text-xs text-gray-800/80 font-medium">
+                  Última atualização: {formatLastUpdate(lastUpdate)}
+                </span>
+              )}
             </div>
           ) : (
             <p className="text-gray-800 relative z-10">Erro ao carregar dados</p>
