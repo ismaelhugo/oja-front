@@ -58,7 +58,7 @@ export default function CEAPPage() {
   const estadoDropdownRef = useRef<HTMLDivElement | null>(null);
   const anoDropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const availableYears = [2023, 2024, 2025];
+  const availableYears = [2023, 2024, 2025, 2026];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -122,27 +122,12 @@ export default function CEAPPage() {
     const date = new Date(dateString);
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const safeDiffMs = Math.max(0, diffMs);
+    const diffDays = Math.floor(safeDiffMs / (1000 * 60 * 60 * 24));
 
-    if (diffHours < 1) {
-      const diffMins = Math.floor(diffMs / (1000 * 60));
-      return `há ${diffMins} minuto${diffMins !== 1 ? 's' : ''}`;
-    } else if (diffHours < 24) {
-      return `há ${diffHours} hora${diffHours !== 1 ? 's' : ''}`;
-    } else if (diffDays === 1) {
-      return 'ontem';
-    } else if (diffDays < 7) {
-      return `há ${diffDays} dias`;
-    } else {
-      return date.toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-    }
+    if (diffDays < 1) return 'Hoje';
+    if (diffDays === 1) return 'Ontem';
+    return `A ${diffDays} dias`;
   };
 
   // Buscar total geral quando ano mudar

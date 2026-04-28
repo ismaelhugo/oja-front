@@ -34,7 +34,7 @@ interface GastoPorMes {
 
 interface Despesa {
   id_local: number;
-  codDocumento: number;
+  codDocumento: string;
   dataDocumento: string;
   tipoDespesa: string;
   nomeFornecedor: string;
