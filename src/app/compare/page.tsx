@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -392,7 +392,7 @@ function ComparisonColumn({ data, placeholder, onSelectClick }: ComparisonColumn
   );
 }
 
-export default function ComparePage() {
+function ComparePageContent() {
   const searchParams = useSearchParams();
   const initialPrimary = Number(searchParams.get('primary')) || null;
   const initialSecondary = Number(searchParams.get('secondary')) || null;
@@ -607,6 +607,20 @@ export default function ComparePage() {
       )}
       <Footer />
     </div>
+  );
+}
+
+export default function ComparePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
+          <p className="text-gray-400 text-sm">Carregando comparação...</p>
+        </div>
+      }
+    >
+      <ComparePageContent />
+    </Suspense>
   );
 }
 
