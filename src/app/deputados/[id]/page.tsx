@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import Footer from '@/components/Footer';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? 'https://oja-back-production.up.railway.app' : 'http://localhost:3333');
 
 interface Deputado {
   id: number;

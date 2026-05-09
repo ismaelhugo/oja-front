@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? 'https://oja-back-production.up.railway.app' : 'http://localhost:3333');
+
 interface Deputado {
   id_local: number;
   id: number;
@@ -71,7 +73,7 @@ export default function DeputadosPage() {
 
   const fetchAllDeputados = async () => {
     try {
-      const response = await fetch("http://localhost:3333/deputado/list?page=1&limit=0");
+      const response = await fetch(`${API_URL}/deputado/list?page=1&limit=0`);
       if (response.ok) {
         const responseData = await response.json();
         // Filtrar deputados de exemplo para os dropdowns
@@ -104,7 +106,7 @@ export default function DeputadosPage() {
         params.append('estado', filtroUF);
       }
       
-      const url = `http://localhost:3333/deputado/list?${params.toString()}`;
+      const url = `${API_URL}/deputado/list?${params.toString()}`;
       console.log('Fetching URL:', url); // Debug
       
       const response = await fetch(url);

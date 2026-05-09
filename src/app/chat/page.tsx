@@ -5,6 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? 'https://oja-back-production.up.railway.app' : 'http://localhost:3333');
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -42,7 +44,7 @@ export default function ChatPage() {
 
     try {
       // Enviar apenas sessaoId (não mais o histórico completo)
-      const response = await fetch('http://localhost:3333/ai/perguntar', {
+      const response = await fetch(`${API_URL}/ai/perguntar`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +104,7 @@ export default function ChatPage() {
   const limparConversa = async () => {
     if (sessaoId) {
       try {
-        await fetch('http://localhost:3333/ai/limpar-sessao', {
+        await fetch(`${API_URL}/ai/limpar-sessao`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
