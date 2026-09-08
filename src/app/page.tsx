@@ -1,9 +1,57 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? 'https://oja-back-production.up.railway.app' : 'http://localhost:3333');
 
 export default function Home() {
+  const [anos, setAnos] = useState<number[] | null>(null);
+  const [ultimaImportacao, setUltimaImportacao] = useState<string | null>(null);
+
+  // Cobertura e data da última importação vêm da API — nunca do texto fixo,
+  // para a página não afirmar um período que a base não tem.
+  useEffect(() => {
+    const buscarCobertura = async () => {
+      try {
+        const [anosRes, atualizacaoRes] = await Promise.all([
+          fetch(`${API_URL}/despesa/anos-disponiveis`),
+          fetch(`${API_URL}/estatisticas/ultima-atualizacao`),
+        ]);
+
+        if (anosRes.ok) {
+          const dados = await anosRes.json();
+          if (Array.isArray(dados) && dados.length > 0) {
+            setAnos([...dados].sort((a, b) => a - b));
+          }
+        }
+
+        if (atualizacaoRes.ok) {
+          const dados = await atualizacaoRes.json();
+          setUltimaImportacao(dados.lastUpdate ?? null);
+        }
+      } catch (err) {
+        console.error('Erro ao buscar cobertura dos dados:', err);
+      }
+    };
+
+    buscarCobertura();
+  }, []);
+
+  const periodoCoberto = anos
+    ? anos.length === 1
+      ? String(anos[0])
+      : `${anos[0]} a ${anos[anos.length - 1]}`
+    : null;
+
+  const dataImportacao = ultimaImportacao
+    ? new Date(ultimaImportacao).toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      })
+    : null;
+
   useEffect(() => {
     // Parallax effect
     const handleParallax = () => {
@@ -65,7 +113,7 @@ export default function Home() {
               Plataforma completa para análise e fiscalização dos gastos públicos
             </p>
             <p className="text-lg lg:text-xl text-gray-400 mb-12 max-w-3xl mx-auto">
-              Explore rankings, estatísticas e informações detalhadas sobre a Cota para Exercício da Atividade Parlamentar (CEAP) dos deputados federais. Dados organizados, acessíveis e sempre atualizados.
+              Explore rankings, estatísticas e informações detalhadas sobre a Cota para Exercício da Atividade Parlamentar (CEAP) dos deputados federais, a partir dos dados abertos da Câmara.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link 
@@ -144,7 +192,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Rankings e Estatísticas</h3>
               <p className="text-gray-700 leading-relaxed">
-                Visualize rankings de deputados, partidos e estados. Explore o gastômetro em tempo real e análises detalhadas dos gastos públicos.
+                Visualize rankings de deputados, partidos e estados. Explore o gastômetro e análises detalhadas dos gastos públicos.
               </p>
             </div>
             
@@ -209,10 +257,10 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white mb-2">
-                      Gastômetro em Tempo Real
+                      Gastômetro
                     </h3>
                     <p className="text-gray-300">
-                      Visualize o total gasto com a CEAP em tempo real. Filtre por ano ou visualize toda a legislatura. 
+                      Visualize o total gasto com a CEAP no período disponível. Filtre por ano ou veja tudo de uma vez. 
                       Veja quantos deputados têm despesas registradas e o total de despesas processadas.
                     </p>
                   </div>
@@ -391,38 +439,42 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-              Dados Confiáveis e Atualizados
+              De onde vêm os dados
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Garantimos precisão, estabilidade e transparência em todas as análises
+              {periodoCoberto
+                ? `Despesas de ${periodoCoberto}, importadas do portal de dados abertos da Câmara dos Deputados.`
+                : 'Despesas importadas do portal de dados abertos da Câmara dos Deputados.'}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover-lift">
               <div className="text-green-400 text-4xl mb-4">✅</div>
-              <h4 className="text-white font-bold mb-3 text-lg">Dados Verificados</h4>
+              <h4 className="text-white font-bold mb-3 text-lg">Fonte oficial</h4>
               <p className="text-gray-300">
-                Validação automática contra a API oficial da Câmara dos Deputados a cada atualização. 
-                Todos os dados são provenientes de fontes públicas oficiais.
+                Todos os números vêm do portal de dados abertos da Câmara dos Deputados.
+                Nenhum valor é editado aqui: o que a plataforma mostra é o que a Câmara publica.
               </p>
             </div>
             
             <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover-lift">
               <div className="text-blue-400 text-4xl mb-4">🔄</div>
-              <h4 className="text-white font-bold mb-3 text-lg">Atualização Contínua</h4>
+              <h4 className="text-white font-bold mb-3 text-lg">Importação periódica</h4>
               <p className="text-gray-300">
-                Sincronização diária com os dados mais recentes da Câmara, garantindo informações sempre atualizadas 
-                e disponíveis de forma estável.
+                A base é reimportada manualmente, não em tempo real.
+                {dataImportacao
+                  ? ` A carga mais recente é de ${dataImportacao}.`
+                  : ' A data da carga mais recente aparece na página do CEAP.'}
               </p>
             </div>
             
             <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover-lift">
               <div className="text-yellow-400 text-4xl mb-4">🛡️</div>
-              <h4 className="text-white font-bold mb-3 text-lg">Plataforma Estável</h4>
+              <h4 className="text-white font-bold mb-3 text-lg">Consulta agregada</h4>
               <p className="text-gray-300">
-                Diferente do portal oficial, nossa plataforma oferece acesso contínuo e confiável aos dados, 
-                sem instabilidades ou erros recorrentes.
+                Rankings, totais e comparações são calculados sobre uma base própria,
+                em vez de paginar a API oficial a cada pergunta.
               </p>
             </div>
           </div>
@@ -468,7 +520,7 @@ export default function Home() {
               />
               <div>
                 <p className="text-white font-bold">Operação Janela Aberta</p>
-                <p className="text-gray-400 text-sm">© 2025 - Transparência Pública e Controle Social</p>
+                <p className="text-gray-400 text-sm">© {new Date().getFullYear()} - Transparência Pública e Controle Social</p>
               </div>
             </div>
             <div className="text-gray-400 text-sm text-center lg:text-right">
